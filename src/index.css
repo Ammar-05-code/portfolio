@@ -1,0 +1,164 @@
+@import "tailwindcss";
+@import url("https://db.onlinewebfonts.com/c/95cecf452d3208890088a5b4c19c7ecf?family=Helvetica+Neue+ME");
+
+@theme {
+  --color-cream: #efeee9;
+  --font-hn: "Helvetica Neue ME", Helvetica, Arial, sans-serif;
+  --font-sans: "Helvetica Neue ME", Helvetica, Arial, sans-serif;
+  --font-serif: "Helvetica Neue ME", Helvetica, Arial, sans-serif;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(4vh) scale(1.03);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lineGrow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.anim-fade-in {
+  animation: fadeIn 1.2s ease-out both;
+}
+
+.anim-rise-in {
+  animation: riseIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) 300ms both;
+}
+
+.anim-fade-up {
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.anim-line {
+  transform-origin: left;
+  animation: lineGrow 1.1s cubic-bezier(0.76, 0, 0.24, 1) 1200ms both;
+}
+
+.marquee {
+  animation: marqueeScroll 30s linear infinite;
+  will-change: transform;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Globally remove the scrollbar on the right while maintaining fluid scrolling */
+html, body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+  background: transparent !important;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Apple tactile hardware inner-glow and specular highlights */
+.apple-capsule {
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.22), 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-capsule:active {
+  box-shadow: inset 0 0 16px 0 rgba(255, 255, 255, 0.22), inset 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.apple-pill-btn {
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-pill-btn:hover {
+  box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 0 14px 0 rgba(255, 255, 255, 0.12);
+}
+
+.apple-pill-btn:active {
+  box-shadow: inset 0 0 18px 0 rgba(255, 255, 255, 0.32), inset 0 1.5px 4px 0 rgba(0, 0, 0, 0.45);
+  transform: scale(0.97);
+}
+
+.apple-primary-btn {
+  box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.95), 0 4px 20px 0 rgba(239, 238, 233, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-primary-btn:hover {
+  box-shadow: inset 0 1px 2px 0 rgba(255, 255, 255, 1), 0 6px 26px 0 rgba(239, 238, 233, 0.4);
+  transform: scale(1.02);
+}
+
+.apple-primary-btn:active {
+  box-shadow: inset 0 2px 8px 0 rgba(0, 0, 0, 0.38), inset 0 0 14px 0 rgba(255, 255, 255, 0.65);
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-in,
+  .anim-rise-in,
+  .anim-fade-up,
+  .anim-line {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .marquee {
+    animation: none !important;
+  }
+}
+
