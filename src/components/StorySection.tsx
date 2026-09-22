@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { GraduationCap, Award, Languages, Sparkles, MapPin, Calendar, CheckCircle2 } from 'lucide-react';
+import { GraduationCap, Award, Languages, Sparkles, MapPin, Calendar, CheckCircle2, Download } from 'lucide-react';
 import { resumeData } from '../data/resume';
+import { generateResumePdf } from '../utils/generateResumePdf';
 
 interface StorySectionProps {
   onOpenDossier: () => void;
@@ -64,10 +65,12 @@ export const StorySection: React.FC<StorySectionProps> = ({ onOpenDossier }) => 
           </div>
           <button
             type="button"
-            onClick={onOpenDossier}
-            className="apple-pill-btn px-4 py-1.5 rounded-full bg-white/[0.12] hover:bg-white/[0.18] border border-white/20 text-cream text-xs tracking-wider transition-all cursor-pointer"
+            onClick={() => generateResumePdf()}
+            className="apple-pill-btn px-4 py-1.5 rounded-full bg-white/[0.12] hover:bg-white/[0.18] border border-white/20 text-cream text-xs tracking-wider transition-all cursor-pointer flex items-center gap-1.5"
+            title="Download Verified Curriculum Vitae (PDF)"
           >
-            Inspect Verified Credentials
+            <Download size={12} className="text-emerald-400" />
+            <span>Download CV (PDF)</span>
           </button>
         </div>
       </motion.div>

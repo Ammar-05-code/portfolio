@@ -3,6 +3,7 @@ export interface ResumeData {
   title: string;
   phone: string;
   email: string;
+  gmailComposeUrl: string;
   linkedin: string;
   linkedinUrl: string;
   github: string;
@@ -47,6 +48,7 @@ export const resumeData: ResumeData = {
   title: "Data Analyst",
   phone: "+91 9043091945",
   email: "ammar786543@gmail.com",
+  gmailComposeUrl: "https://mail.google.com/mail/?view=cm&fs=1&to=ammar786543@gmail.com&su=Inquiry%20via%20Data%20Analyst%20Portfolio",
   linkedin: "linkedin.com/in/ammar56",
   linkedinUrl: "https://linkedin.com/in/ammar56",
   github: "github.com/Ammar-05-code",

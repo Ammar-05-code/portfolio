@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Mail, Phone, MapPin, ExternalLink, Copy, Check, ArrowUpRight, Sparkles } from 'lucide-react';
+import { Mail, Phone, MapPin, ExternalLink, Copy, Check, ArrowUpRight, Sparkles, Download } from 'lucide-react';
 import { resumeData } from '../data/resume';
+import { generateResumePdf } from '../utils/generateResumePdf';
 
 interface ContactSectionProps {
   onOpenDossier: () => void;
@@ -78,22 +79,27 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenDossier })
               Based in Chennai, India. Equipped with hands-on expertise in automated SQL data processing pipelines, predictive machine learning models, and strategic executive Power BI reporting.
             </p>
 
-            <div className="flex flex-wrap gap-3 pt-2">
+            <div className="flex flex-wrap items-center gap-2.5 pt-2">
               <a
-                href={`mailto:${resumeData.email}`}
-                className="apple-primary-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-cream text-black text-xs font-semibold uppercase tracking-wider cursor-pointer"
+                href={resumeData.gmailComposeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="apple-primary-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-cream text-black text-xs font-semibold uppercase tracking-wider cursor-pointer shadow-[0_2px_12px_rgba(255,255,255,0.2)]"
+                title="Compose email directly in Gmail"
               >
                 <Mail size={14} />
-                <span>Send Email</span>
+                <span>Send via Gmail</span>
               </a>
 
               <button
+                id="contact-download-cv-btn"
                 type="button"
-                onClick={onOpenDossier}
+                onClick={() => generateResumePdf()}
                 className="apple-pill-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.12] hover:bg-white/[0.18] border border-white/25 text-cream text-xs uppercase tracking-wider backdrop-blur-xl cursor-pointer"
+                title="Download Official PDF Resume"
               >
-                <span>Complete Curriculum Vitae</span>
-                <ArrowUpRight size={14} className="text-cream/70" />
+                <Download size={14} className="text-emerald-400" />
+                <span>Download CV (PDF)</span>
               </button>
             </div>
           </div>
@@ -104,11 +110,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenDossier })
             <div className="p-4 rounded-2xl bg-white/[0.055] border border-white/15 flex items-center justify-between gap-3 shadow-sm">
               <div className="min-w-0">
                 <span className="text-[10px] uppercase font-mono tracking-wider text-cream/60 block">
-                  Email Dispatch
+                  Email Dispatch (Gmail)
                 </span>
                 <a
-                  href={`mailto:${resumeData.email}`}
+                  href={resumeData.gmailComposeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-xs sm:text-sm font-mono text-cream hover:text-white truncate block mt-0.5"
+                  title="Compose email directly in Gmail"
                 >
                   {resumeData.email}
                 </a>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ArrowUpRight, FileText, ChevronDown, ArrowUp } from 'lucide-react';
+import { X, ArrowUpRight, FileText, ChevronDown, ArrowUp, Download } from 'lucide-react';
 import { motion } from 'motion/react';
 import { ResumeDossier, DossierTab } from './components/ResumeDossier';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
@@ -9,6 +9,7 @@ import { SkillsCertificationsSection } from './components/SkillsCertificationsSe
 import { ContactSection } from './components/ContactSection';
 import { DataPointsParticleCanvas } from './components/DataPointsParticleCanvas';
 import { resumeData } from './data/resume';
+import { generateResumePdf } from './utils/generateResumePdf';
 
 type SectionId = 'hero' | 'story' | 'jobs' | 'skills' | 'contact';
 
@@ -80,7 +81,7 @@ export default function App() {
   const socialLinks = [
     { label: 'LinkedIn', url: resumeData.linkedinUrl },
     { label: 'GitHub', url: resumeData.githubUrl },
-    { label: 'Email', url: `mailto:${resumeData.email}` },
+    { label: 'Gmail', url: resumeData.gmailComposeUrl },
   ];
 
   return (
@@ -187,11 +188,13 @@ export default function App() {
             ))}
 
             <button
+              id="desktop-cv-btn"
               type="button"
-              onClick={() => openDossier('all')}
-              className="apple-pill-btn ml-1 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-xs font-mono text-cream/90 flex items-center gap-1.5 transition-all cursor-pointer"
+              onClick={() => generateResumePdf()}
+              className="apple-pill-btn ml-1 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-xs font-mono text-cream flex items-center gap-1.5 transition-all cursor-pointer"
+              title="Download Curriculum Vitae"
             >
-              <FileText size={12} />
+              <Download size={12} className="text-emerald-400" />
               <span>CV</span>
             </button>
           </div>
@@ -297,25 +300,26 @@ export default function App() {
                 </p>
 
                 {/* Quick Launch Buttons */}
-                <div className="mt-5 flex flex-wrap items-center gap-3">
+                <div className="mt-5 flex flex-wrap items-center gap-2.5">
                   <button
-                    id="open-full-dossier-btn"
+                    id="hero-download-cv-btn"
                     type="button"
-                    onClick={() => openDossier('all')}
-                    className="apple-primary-btn flex items-center gap-2 px-5 py-2.5 rounded-full bg-cream text-black text-xs uppercase tracking-wider font-semibold cursor-pointer"
+                    onClick={() => generateResumePdf()}
+                    className="apple-primary-btn flex items-center gap-2 px-5 py-2.5 rounded-full bg-cream text-black text-xs uppercase tracking-wider font-semibold cursor-pointer shadow-[0_2px_12px_rgba(255,255,255,0.2)]"
+                    title="Download Official Curriculum Vitae as PDF"
                   >
-                    <FileText size={14} />
-                    <span>Curriculum Vitae</span>
+                    <Download size={14} className="text-black" />
+                    <span>Download CV (PDF)</span>
                   </button>
 
                   <button
                     id="open-projects-btn"
                     type="button"
                     onClick={() => scrollToSection('jobs')}
-                    className="apple-pill-btn flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/25 bg-white/[0.12] hover:bg-white/[0.18] text-cream text-xs uppercase tracking-wider backdrop-blur-xl cursor-pointer"
+                    className="apple-pill-btn flex items-center gap-1.5 px-4 py-2.5 rounded-full border border-white/15 bg-white/[0.05] hover:bg-white/[0.12] text-cream/80 hover:text-cream text-xs uppercase tracking-wider backdrop-blur-xl cursor-pointer"
                   >
-                    <span>Projects &amp; Experience</span>
-                    <ArrowUpRight size={14} className="text-cream/70" />
+                    <span>Projects</span>
+                    <ArrowUpRight size={13} className="text-cream/60" />
                   </button>
                 </div>
               </div>
@@ -423,8 +427,11 @@ export default function App() {
           <div id="footer-right-block" className="text-center sm:text-right leading-tight">
             <p className="text-cream/70 text-[11px]">Chennai, Tamil Nadu</p>
             <a
-              href={`mailto:${resumeData.email}`}
+              href={resumeData.gmailComposeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-cream hover:text-white font-mono text-[12px] transition-colors"
+              title="Compose message via Gmail"
             >
               {resumeData.email}
             </a>
@@ -484,12 +491,16 @@ export default function App() {
             ))}
 
             <button
+              id="mobile-download-cv-btn"
               type="button"
-              onClick={() => openDossier('all')}
-              className="flex items-center justify-between px-5 py-3.5 rounded-2xl bg-cream text-black font-semibold text-base mt-2 active:scale-[0.98] transition-all cursor-pointer"
+              onClick={() => {
+                setIsDrawerOpen(false);
+                generateResumePdf();
+              }}
+              className="w-full flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-cream text-black font-semibold text-sm active:scale-[0.98] transition-all cursor-pointer shadow-[0_2px_12px_rgba(255,255,255,0.2)] mt-2"
             >
-              <span>Curriculum Vitae</span>
-              <FileText size={16} />
+              <Download size={16} />
+              <span>Download CV (PDF)</span>
             </button>
           </nav>
         </div>

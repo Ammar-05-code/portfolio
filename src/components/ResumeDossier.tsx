@@ -13,8 +13,10 @@ import {
   Check,
   Languages,
   Trophy,
+  Download,
 } from 'lucide-react';
 import { resumeData } from '../data/resume';
+import { generateResumePdf } from '../utils/generateResumePdf';
 
 export type DossierTab = 'all' | 'story' | 'jobs' | 'skills' | 'contact';
 
@@ -87,15 +89,28 @@ export const ResumeDossier: React.FC<ResumeDossierProps> = ({
             </div>
           </div>
 
-          <button
-            id="close-dossier-btn"
-            type="button"
-            onClick={onClose}
-            aria-label="Close dossier"
-            className="apple-pill-btn h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-cream/90 flex items-center justify-center transition-all focus:outline-none active:shadow-[inset_0_0_12px_rgba(255,255,255,0.4)] cursor-pointer"
-          >
-            <X size={18} strokeWidth={1.8} />
-          </button>
+          <div className="flex items-center gap-2.5">
+            <button
+              id="header-download-pdf-btn"
+              type="button"
+              onClick={() => generateResumePdf()}
+              className="apple-primary-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-cream hover:bg-white text-black text-xs font-medium transition-all shadow-[0_2px_10px_rgba(255,255,255,0.2)] cursor-pointer"
+              title="Download ATS-compliant CV (PDF)"
+            >
+              <Download size={13} strokeWidth={2.2} className="text-black" />
+              <span>Download CV (PDF)</span>
+            </button>
+
+            <button
+              id="close-dossier-btn"
+              type="button"
+              onClick={onClose}
+              aria-label="Close dossier"
+              className="apple-pill-btn h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-cream/90 flex items-center justify-center transition-all focus:outline-none active:shadow-[inset_0_0_12px_rgba(255,255,255,0.4)] cursor-pointer"
+            >
+              <X size={18} strokeWidth={1.8} />
+            </button>
+          </div>
         </div>
 
         {/* Apple-style Segmented Tab Pill Navigation */}
@@ -372,8 +387,11 @@ export const ResumeDossier: React.FC<ResumeDossierProps> = ({
                       Email Address
                     </span>
                     <a
-                      href={`mailto:${resumeData.email}`}
+                      href={resumeData.gmailComposeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-xs sm:text-sm text-cream hover:underline truncate block mt-0.5"
+                      title="Open in Gmail"
                     >
                       {resumeData.email}
                     </a>
@@ -462,21 +480,40 @@ export const ResumeDossier: React.FC<ResumeDossierProps> = ({
         </div>
 
         {/* Footer info bar */}
-        <div className="flex items-center justify-between px-6 sm:px-8 py-4 border-t border-white/10 bg-white/[0.03] backdrop-blur-xl text-xs text-cream/60">
-          <span>Mohammed Ammar &bull; 2026</span>
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 sm:px-8 py-4 border-t border-white/10 bg-white/[0.03] backdrop-blur-xl text-xs text-cream/60">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.7)]" />
+            <span className="font-mono text-cream/80">Mohammed Ammar F &bull; Data Analyst 2026</span>
+          </div>
+          <div className="flex items-center gap-2.5">
             <a
-              href={`mailto:${resumeData.email}`}
-              className="apple-pill-btn px-4 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-cream text-xs transition-all active:shadow-[inset_0_0_10px_rgba(255,255,255,0.3)]"
+              href={resumeData.gmailComposeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="apple-pill-btn px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-cream text-xs transition-all active:shadow-[inset_0_0_10px_rgba(255,255,255,0.3)]"
+              title="Compose message via Gmail"
             >
-              Send Email
+              Send via Gmail
+            </a>
+            <a
+              href="/Mohammed_Ammar_Resume.pdf"
+              download="Mohammed_Ammar_Resume.pdf"
+              onClick={(e) => {
+                // If browser supports direct client-side generation, trigger for freshest render
+                generateResumePdf();
+                e.preventDefault();
+              }}
+              className="apple-primary-btn flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-cream hover:bg-white text-black font-semibold text-xs transition-all cursor-pointer shadow-[0_2px_12px_rgba(255,255,255,0.2)]"
+            >
+              <Download size={13} className="text-black" />
+              <span>Download CV (PDF)</span>
             </a>
             <button
               type="button"
               onClick={() => window.print()}
-              className="apple-primary-btn px-4 py-1.5 rounded-full bg-cream text-black font-medium hover:bg-cream/90 text-xs transition-all cursor-pointer"
+              className="apple-pill-btn px-3.5 py-1.5 rounded-full bg-white/[0.08] hover:bg-white/[0.16] border border-white/15 text-cream/80 hover:text-cream text-xs transition-all cursor-pointer hidden sm:inline-flex"
             >
-              Print / Save PDF
+              Print
             </button>
           </div>
         </div>
